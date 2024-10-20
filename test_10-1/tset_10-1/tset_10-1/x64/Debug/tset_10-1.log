@@ -1,7 +1,0 @@
-﻿  test_10-1.c
-E:\VisualStudio2022Project\test_10-1\tset_10-1\tset_10-1\test_10-1.c(1,10): warning C4067: 预处理器指令后有意外标记 - 应输入换行符
-E:\VisualStudio2022Project\test_10-1\tset_10-1\tset_10-1\test_10-1.c(17,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
-      E:\VisualStudio2022Project\test_10-1\tset_10-1\tset_10-1\test_10-1.c(17,9):
-      请考虑在格式字符串中使用“%zd”
-  
-  tset_10-1.vcxproj -> E:\VisualStudio2022Project\test_10-1\tset_10-1\x64\Debug\tset_10-1.exe
