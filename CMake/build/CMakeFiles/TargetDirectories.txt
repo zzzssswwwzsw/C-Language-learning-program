@@ -1,0 +1,3 @@
+C:/Users/ASUS/Desktop/CMake/build/CMakeFiles/test.dir
+C:/Users/ASUS/Desktop/CMake/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/ASUS/Desktop/CMake/build/CMakeFiles/ZERO_CHECK.dir

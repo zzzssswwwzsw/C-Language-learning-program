@@ -1,0 +1,10 @@
+^C:\USERS\ASUS\DESKTOP\CMAKE\CMAKELISTS.TXT
+setlocal
+D:\CMake\CMake\bin\cmake.exe -SC:/Users/ASUS/Desktop/CMake -BC:/Users/ASUS/Desktop/CMake/build --check-stamp-file C:/Users/ASUS/Desktop/CMake/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
