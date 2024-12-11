@@ -96,7 +96,7 @@ int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_Use
 
 
 
-void User_menu(char User_own_Account[User_Account_Length])
+void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account)
 {
 	int input = 0;
 	do
@@ -117,13 +117,16 @@ void User_menu(char User_own_Account[User_Account_Length])
 		{
 		case 1:
 
-			Book_Boorow();
+			Book_Boorow(User_own_Account, Num_User_Account);
 			break;
 
 		case 2:
 			break;
 		case 3:
+
+			Query_Information(User_own_Account);
 			break;
+
 		case 4:
 			break;
 		case 0://退出登录
@@ -143,7 +146,7 @@ void User_menu(char User_own_Account[User_Account_Length])
 
 
 
-void Book_Boorow()
+void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Account)
 {
 	char input[Book_Name_Length] = { 0 };
 	while (1)
@@ -174,10 +177,8 @@ void Book_Boorow()
 		{
 			//统计书的数量
 			int books_count = 0;
-			while (books[books_count].id != 0)
-			{
+			while (books[books_count].Id != 0)
 				books_count++;
-			}
 
 			//查询该书是否存在
 			int i = 0;
@@ -196,7 +197,7 @@ void Book_Boorow()
 					printf("**************************************\n");
 					printf("***         您要找的是否为：       ***\n");
 					printf("**************************************\n");
-					printf("*** id : %d\n", books[find_flag].id);
+					printf("*** id : %d\n", books[find_flag].Id);
 					printf("*** Name : %s\n", books[find_flag].Name);
 					printf("**************************************\n");
 					printf("***     1. 确认  ***  0. 取消      ***\n");
@@ -207,10 +208,41 @@ void Book_Boorow()
 					switch (input1)
 					{
 					case 1://确认借书
-						//borrow();
+					{
+						//修改个人借书记录
+						int j = 0;
+						while (1)
+						{
+							if (borrow[Num_User_Account].borrow_book[j].time == 0)//如果该位置为空位
+							{
+								borrow[Num_User_Account].borrow_book[j].time = time(NULL);  //记录借阅时间
+								strcpy(borrow[Num_User_Account].borrow_book[j].name, books[find_flag].Name);  //记录书本名称
+								break;
+							}
+							else//查找下一个位置
+								j++;
+						}
+						//修改借书总记录
+						j = 0;
+						while (1)
+						{
+							if (all_borrow[j].time == 0)
+							{
+								strcpy(all_borrow[j].User_Account, User_own_Account);//记录用户名
+								strcpy(all_borrow[j].name, books[find_flag].Name);//记录书名
+								all_borrow[j].time = time(NULL);
+								break;
+							}
+							else
+								j++;
+						}
+						input1 = 0;//退出标识
 						break;
+					}
 					case 0://取消返回
+
 						break;
+
 					default:
 						printf("输入错误！！请重输\a\n");
 						Sleep(1500);
