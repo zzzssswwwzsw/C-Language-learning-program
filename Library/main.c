@@ -39,7 +39,7 @@ struct BOOK books[Book_Num] =
 
 
 
-//用户个人借阅信息记录（与个人用户数组下标需保持一致）
+//用户个人借阅归还信息记录（与个人用户数组下标需保持一致）
 struct Borrow borrow[User_Num] =
 {
 {"000001"},
@@ -52,8 +52,6 @@ struct Borrow borrow[User_Num] =
 
 
 
-//用户借阅信息总记录
-struct All_Borrow all_borrow[Borrowing_Records] = { 0 };
 
 
 

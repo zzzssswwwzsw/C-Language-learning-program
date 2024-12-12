@@ -45,6 +45,8 @@ int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_Us
 
 
 
+
+
 int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_User_Account)
 {
 	char Account[User_Account_Length] = { 0 };
@@ -96,13 +98,15 @@ int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_Use
 
 
 
+
+
 void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account)
 {
 	int input = 0;
 	do
 	{
 		system("cls");
-		printf("*用户 %s ，你好！*****************\n", User_own_Account);
+		printf("*用户 %s ，你好！\n", User_own_Account);
 		printf("**************************************\n");
 		printf("**********  1. 借书         **********\n");
 		printf("**********  2. 还书         **********\n");
@@ -121,14 +125,20 @@ void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account)
 			break;
 
 		case 2:
+
+			Book_Return(User_own_Account, Num_User_Account);
 			break;
+
 		case 3:
 
 			Query_Information(User_own_Account);
 			break;
 
 		case 4:
+
+			Check_Books();
 			break;
+
 		case 0://退出登录
 
 			break;
@@ -143,6 +153,8 @@ void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account)
 		}
 	} while (input);
 }
+
+
 
 
 
@@ -170,9 +182,8 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 
 		//判断是否要进行查看书籍列表
 		if (strcmp(input, "CHECK") == 0)
-		{
-			//**********************
-		}
+			Check_Books();
+
 		else
 		{
 			//统计书的数量
@@ -193,61 +204,85 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 				int input1 = 0;
 				do
 				{
-					system("cls");
-					printf("**************************************\n");
-					printf("***         您要找的是否为：       ***\n");
-					printf("**************************************\n");
-					printf("*** id : %d\n", books[find_flag].Id);
-					printf("*** Name : %s\n", books[find_flag].Name);
-					printf("**************************************\n");
-					printf("***     1. 确认  ***  0. 取消      ***\n");
-					printf("**************************************\n");
-					printf("请输入：");
-					scanf("%d", &input1);
+					//查询书籍存货是否足够
+					if (books[find_flag].Inventory_quantity != 0)
+					{
+						system("cls");
+						printf("**************************************\n");
+						printf("***         您要找的是否为：       ***\n");
+						printf("**************************************\n");
+						printf("*** id : %d\n", books[find_flag].Id);
+						printf("*** 名称 : %s\n", books[find_flag].Name);
+						printf("*** 作者 : %s\n", books[find_flag].author);
+						printf("*** 分类号 : %s\n", books[find_flag].Classification);
+						printf("*** 出版单位 : %s\n", books[find_flag].Publisher);
+						printf("*** 出版时间 : %d\n", books[find_flag].Year);
+						printf("*** 库存数量 : %d\n", books[find_flag].Inventory_quantity);
+						printf("*** 价格 : %f\n", books[find_flag].Price);
+						printf("**************************************\n");
+						printf("***     1. 确认  ***  0. 取消      ***\n");
+						printf("**************************************\n");
+						printf("请输入：");
+						scanf("%d", &input1);
 
-					switch (input1)
-					{
-					case 1://确认借书
-					{
-						//修改个人借书记录
-						int j = 0;
-						while (1)
+						switch (input1)
 						{
-							if (borrow[Num_User_Account].borrow_book[j].time == 0)//如果该位置为空位
-							{
-								borrow[Num_User_Account].borrow_book[j].time = time(NULL);  //记录借阅时间
-								strcpy(borrow[Num_User_Account].borrow_book[j].name, books[find_flag].Name);  //记录书本名称
-								break;
-							}
-							else//查找下一个位置
-								j++;
-						}
-						//修改借书总记录
-						j = 0;
-						while (1)
+						case 1://确认借书
 						{
-							if (all_borrow[j].time == 0)
+							//修改个人借书记录
+							int j = 0;
+							while (1)
 							{
-								strcpy(all_borrow[j].User_Account, User_own_Account);//记录用户名
-								strcpy(all_borrow[j].name, books[find_flag].Name);//记录书名
-								all_borrow[j].time = time(NULL);
-								break;
+								if (borrow[Num_User_Account].borrow_book[j].time == 0)//如果该位置为空位
+								{
+									borrow[Num_User_Account].borrow_book[j].time = time(NULL);  //记录借阅时间
+									strcpy(borrow[Num_User_Account].borrow_book[j].name, books[find_flag].Name);  //记录书本名称
+									break;
+								}
+								else//查找下一个位置
+									j++;
 							}
-							else
-								j++;
+
+							//修改图书馆库存数量
+							books[find_flag].Inventory_quantity--;
+
+							printf("借书成功！！\n");
+							Sleep(1500);
+							input1 = 0;//退出标识
+							break;
+
 						}
-						input1 = 0;//退出标识
-						break;
+						case 0://取消返回
+
+							break;
+
+						default:
+
+							printf("输入错误！！请重输\a\n");
+							Sleep(1500);
+							input1 = 1;
+							break;
+
+						}
 					}
-					case 0://取消返回
-
-						break;
-
-					default:
-						printf("输入错误！！请重输\a\n");
+					else//书籍存货不足
+					{
+						system("cls");
+						printf("**************************************\n");
+						printf("***         您要找的书籍：         ***\n");
+						printf("**************************************\n");
+						printf("*** id : %d\n", books[find_flag].Id);
+						printf("*** 名称 : %s\n", books[find_flag].Name);
+						printf("*** 作者 : %s\n", books[find_flag].author);
+						printf("*** 分类号 : %s\n", books[find_flag].Classification);
+						printf("*** 出版单位 : %s\n", books[find_flag].Publisher);
+						printf("*** 出版时间 : %d\n", books[find_flag].Year);
+						printf("*** 库存数量 : %d\n", books[find_flag].Inventory_quantity);
+						printf("*** 价格 : %f\n", books[find_flag].Price);
+						printf("**************************************\n");
+						printf("***       目前暂未存货，抱歉！     ***\a\n");
 						Sleep(1500);
 						input1 = 1;
-						break;
 					}
 				} while (input1);
 			}
@@ -257,5 +292,34 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 				Sleep(1500);
 			}
 		}
+	}
+}
+
+
+
+
+
+void Book_Return(char User_own_Account[User_Account_Length], int Num_User_Account)
+{
+	char input[Book_Name_Length] = { 0 };
+	while (1)
+	{
+		system("cls");
+		printf("******************************************\n");
+		printf("****    请输入您要归还的书籍名称：    ****\n");
+		printf("**** 重复借阅的书籍将会优先归还先借的 ****\n");
+		printf("******************************************\n");
+		printf("****             输入0返回            ****\n");
+		printf("******************************************\n");
+		printf("请输入：");
+		scanf("%s", input);
+
+		if (strcmp(input, "0") == 0)//为0时返回
+			break;
+
+		//查询是否存在记录
+		
+		//查询该书是否超时
+		Is_Timeout(input, Num_User_Account);
 	}
 }

@@ -1,7 +1,8 @@
 ﻿  Administrator_system.c
   Library_system.c
   User_system.c
-E:\VisualStudio2022Project\Class\After-Class\Library\Library\Library_system.c(83,1): error C2143: 语法错误: 缺少“;”(在“}”的前面)
   main.c
   正在生成代码...
 E:\VisualStudio2022Project\Class\After-Class\Library\Library\User_system.c(44,1): warning C4715: “User_choose”: 不是所有的控件路径都返回值
+E:\VisualStudio2022Project\Class\After-Class\Library\Library\Library_system.c(40,1): warning C4715: “User_or_Administrator”: 不是所有的控件路径都返回值
+  Library.vcxproj -> E:\VisualStudio2022Project\Class\After-Class\Library\x64\Debug\Library.exe
