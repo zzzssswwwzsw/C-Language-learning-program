@@ -2,6 +2,8 @@
 
 
 
+
+
 //总书籍记录
 struct BOOK books[Book_Num] =
 {//  名称                   作者                分类号     出版单位        出版时间 库存数量 价格
@@ -93,9 +95,9 @@ int main()
 		case 1:
 
 			//查询用户是否选择成功
-			if (User_choose(User_Account, &Num_User_Account) != -1)
+			if (User_choose(User_Account, &Num_User_Account))
 			{
-				User_menu(User_Account[Num_User_Account][0], Num_User_Account);
+				User_menu(User_Account, Num_User_Account);
 			}
 			break;
 
@@ -104,7 +106,7 @@ int main()
 			//查询管理员是否登录成功
 			if (Administrator_login(Administrator_Account))
 			{
-
+				Administrator_menu();
 			}
 			break;
 

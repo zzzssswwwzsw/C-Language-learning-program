@@ -3,6 +3,7 @@
 
 
 
+
 int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_User_Account)
 {
 	int input = 0;
@@ -18,29 +19,27 @@ int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_Us
 		printf("**************************************\n");
 		printf("请选择：");
 		scanf("%d", &input);
+
 		switch (input)
 		{
 		case 0:
 
-			return -1;//选择失败，返回值为-1
+			return 0;//选择失败，返回值为0
 
 		case 1:
 
 			//判断是否登录成功
-			if (User_login(User_Account, Num_User_Account) != -1)//登录成功
+			if (User_login(User_Account, Num_User_Account))//登录成功
 				return 1;//登录成功，返回值为1
-			else//登录失败，重新循环
-				input = 0;
-			break;
 
 		default:
 
 			printf("选择错误！！请重新输入\a\n");
-			input = 0;
 			break;
 
 		}
-	} while (!input);
+	} while (1);
+	return 0;
 }
 
 
@@ -67,7 +66,7 @@ int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_Use
 
 		if (strcmp(Account, "0") == 0 || strcmp(Password, "0") == 0)//判断是否返回
 		{
-			return -1;//登录失败，返回值为-1
+			return 0;//登录失败，返回值为0
 		}
 
 		//查询账号数量
@@ -100,8 +99,10 @@ int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_Use
 
 
 
-void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account)
+void User_menu(char User_Account[User_Num][2][User_Account_Length], int Num_User_Account)
 {
+	char User_own_Account[User_Account_Length] = { 0 };
+	strcpy(User_own_Account, User_Account[Num_User_Account][0]);
 	int input = 0;
 	do
 	{
@@ -112,6 +113,7 @@ void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account)
 		printf("**********  2. 还书         **********\n");
 		printf("**********  3. 查询个人信息 **********\n");
 		printf("**********  4. 查看书籍列表 **********\n");
+		printf("**********  5. 修改密码     **********\n");
 		printf("**********  0. 退出登录     **********\n");
 		printf("**************************************\n");
 		printf("请选择：");
@@ -131,12 +133,17 @@ void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account)
 
 		case 3:
 
-			Query_Information(User_own_Account);
+			Query_Information(User_own_Account, Num_User_Account);
 			break;
 
 		case 4:
 
 			Check_Books();
+			break;
+
+		case 5:
+
+			Change_Password(User_Account, Num_User_Account);
 			break;
 
 		case 0://退出登录
@@ -233,6 +240,7 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 							int j = 0;
 							while (1)
 							{
+								//修改未归还书籍记录
 								if (borrow[Num_User_Account].borrow_book[j].time == 0)//如果该位置为空位
 								{
 									borrow[Num_User_Account].borrow_book[j].time = time(NULL);  //记录借阅时间
@@ -241,6 +249,20 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 								}
 								else//查找下一个位置
 									j++;
+							}
+
+							int k = 0;
+							while (1)
+							{
+								//修改总借书记录
+								if (borrow[Num_User_Account].all_borrow_book[k].time == 0)//如果该位置为空位
+								{
+									borrow[Num_User_Account].all_borrow_book[k].time = borrow[Num_User_Account].borrow_book[j].time;//记录借阅时间
+									strcpy(borrow[Num_User_Account].all_borrow_book[k].name, books[find_flag].Name);//记录书本名称
+									break;
+								}
+								else
+									k++;
 							}
 
 							//修改图书馆库存数量
@@ -318,8 +340,72 @@ void Book_Return(char User_own_Account[User_Account_Length], int Num_User_Accoun
 			break;
 
 		//查询是否存在记录
-		
-		//查询该书是否超时
-		Is_Timeout(input, Num_User_Account);
+		int i = 0;
+		while (1)
+		{
+			if (borrow[Num_User_Account].borrow_book[i].time == 0)
+			{
+				i = -1;//未找到，返回i为-1
+				break;
+			}
+			else if (strcmp(borrow[Num_User_Account].borrow_book[i].name, input) == 0)
+				break;//找到了，返回该借书记录所在位置下标i
+
+			else
+				i++;
+		}
+
+		if (i != -1)
+		{
+			int input1 = 1;
+			time_t Now_Time = time(NULL);//获取当前时间
+			//查询该书是否超时
+			if (Is_Timeout(input, Num_User_Account))
+			{   //如果超时了
+				system("cls");
+				printf("******************************************\n");
+				printf("****       您超时了，请缴纳罚款！     ****\n");
+				printf("******************************************\n");
+				printf("****           1. 确认缴纳            ****\n");
+				printf("****           0. 返回                ****\n");
+				printf("******************************************\n");
+				printf("请输入：");
+				scanf("%d", &input1);
+			}
+
+			if (input1 == 1)//已缴纳罚款或未超时
+			{   //还书
+
+				//删除个人借书记录，并且补齐
+				do
+				{
+					strcpy(borrow[Num_User_Account].borrow_book[i].name, borrow[Num_User_Account].borrow_book[i + 1].name);
+					borrow[Num_User_Account].borrow_book[i].time = borrow[Num_User_Account].borrow_book[i + 1].time;
+					i++;
+				} while (borrow[Num_User_Account].borrow_book[i].time != 0);
+
+				//新增还书信息
+				int k = 0;
+				while (1)//找到空位
+				{
+					if (borrow[Num_User_Account].Return_book[k].time == 0)
+					{
+						strcpy(borrow[Num_User_Account].Return_book[k].name, input);
+						borrow[Num_User_Account].Return_book[k].time = Now_Time;
+						break;
+					}
+					else
+						k++;
+				}
+
+				printf("还书成功！！\n");
+				Sleep(1500);
+			}
+		}
+		else
+		{
+			printf("未找到该书信息！！\a\n");
+			Sleep(1500);
+		}
 	}
 }

@@ -1,6 +1,9 @@
 #include "library.h"
 
 
+
+
+
 int Administrator_login(char Administrator_Account[2][20])
 {
 	char Account[20] = { 0 };
@@ -36,4 +39,76 @@ int Administrator_login(char Administrator_Account[2][20])
 			Sleep(1500);
 		}
 	}
+}
+
+
+
+
+
+void Administrator_menu()
+{
+	int input = 0;
+	do
+	{
+		system("cls");
+		printf("*管理员，你好！***********************\n");
+		printf("**************************************\n");
+		printf("**********  1. 查询图书信息  *********\n");
+		printf("**********  2. 修改书籍信息  *********\n");
+		printf("**********  3. 添加新用户    *********\n");
+		printf("**********  4. 查看用户信息  *********\n");
+		printf("**********  5. 查看借阅信息  *********\n");
+		printf("**********  6. 查看归还信息  *********\n");
+		printf("**********  0. 退出登录      *********\n");
+		printf("**************************************\n");
+		printf("请输入：");
+		scanf("%d", &input);
+
+		switch (input)
+		{
+		case 1:
+
+			Check_Books_menu();
+			break;
+
+		case 2:
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 0:
+			break;
+		default:
+
+			printf("输入错误！！请重输\a\n");
+			Sleep(1500);
+			input = 1;
+			break;
+
+		}
+	} while (input);
+}
+
+
+
+
+
+void Check_Books_menu()
+{
+	int input = 0;
+
+	system("cls");
+	printf("**************************************\n");
+	printf("**********  1. 查询书籍列表    *******\n");
+	printf("**********  2. 按书名查询      *******\n");
+	printf("**********  3. 按作者查询      *******\n");
+	printf("**********  4. 按分类号查询    *******\n");
+	printf("**********  5. 按出版单位查询  *******\n");
+	printf("**********  6. 按出版时间查询  *******\n");
+	printf("**************************************\n");
 }

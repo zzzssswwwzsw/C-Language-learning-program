@@ -36,6 +36,9 @@
 //每个用户最多借阅书籍数
 #define User_Borrow_MAX_Num 20
 
+//借还书记录总条数
+#define User_Borrow_Return_MAX_Num 100
+
 //用户账号以及密码最大长度
 #define User_Account_Length 20
 
@@ -69,17 +72,23 @@ struct Borrow
 {
 	char Account[User_Account_Length];
 
-	struct Borrow_book//借书记录
+	struct Borrow_book//未归还书籍记录
 	{
 		time_t time;  //借阅的时间
 		char name[Book_Name_Length];//书名
 	}borrow_book[User_Borrow_MAX_Num];
 
+	struct All_Borrow_book//借书记录
+	{
+		time_t time;  //借阅的时间
+		char name[Book_Name_Length];//书名
+	}all_borrow_book[User_Borrow_Return_MAX_Num];
+
 	struct Return_book//还书记录
 	{
 		time_t time;  //借阅的时间
 		char name[Book_Name_Length];//书名
-	}Return_book[User_Borrow_MAX_Num];
+	}Return_book[User_Borrow_Return_MAX_Num];
 
 }borrow[User_Num];
 //声明外部定义的用户借阅归还记录结构体
@@ -104,11 +113,8 @@ int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_Us
 //用户登录界面
 int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_User_Account);
 
-//管理员登录
-int Administrator_login(char Administrator_Account[2][20]);
-
 //用户菜单
-void User_menu(char User_own_Account[User_Account_Length], int Num_User_Account);
+void User_menu(char User_Account[User_Num][2][User_Account_Length], int Num_User_Account);
 
 //用户借书系统
 void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Account);
@@ -117,16 +123,36 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 void Book_Return(char User_own_Account[User_Account_Length], int Num_User_Account);
 
 //查询信息菜单
-void Query_Information(char Account[User_Account_Length]);
+void Query_Information(char Account[User_Account_Length], int Num_User_Account);
 
-//查询借书信息
-void Borrow_information(char Account[User_Account_Length]);
+//查询未还书籍信息
+void Borrow_information(char Account[User_Account_Length], int Num_User_Account);
+
+//查询借书总记录
+void All_Borrow_information(char Account[User_Account_Length], int Num_User_Account);
+
+//查询还书总记录
+void Return_information(char Account[User_Account_Length], int Num_User_Account);
 
 //查询书籍列表
 void Check_Books();
 
 //查询借书是否超时，若超时返回值为1，没有超时返回值为0
 int Is_Timeout(char book_name[Book_Name_Length], int Num_User_Account);
+
+//修改用户密码
+void Change_Password(char User_Account[User_Num][2][User_Account_Length], int Num_User_Account);
+
+
+
+//管理员登录
+int Administrator_login(char Administrator_Account[2][20]);
+
+//管理员菜单
+void Administrator_menu();
+
+//查询书籍信息菜单
+void Check_Books_menu();
 
 
 /*************************************************************/
