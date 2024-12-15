@@ -25,16 +25,19 @@ int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_Us
 		case 0:
 
 			return 0;//选择失败，返回值为0
+			break;
 
 		case 1:
 
 			//判断是否登录成功
 			if (User_login(User_Account, Num_User_Account))//登录成功
 				return 1;//登录成功，返回值为1
+			break;
 
 		default:
 
 			printf("选择错误！！请重新输入\a\n");
+			Sleep(1500);
 			break;
 
 		}
@@ -61,13 +64,15 @@ int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_Use
 		printf("**************************************\n");
 		printf("********** 请输入账号：");
 		scanf("%s", Account);
+
+		if (strcmp(Account, "0") == 0)//判断是否返回
+			return 0;//登录失败，返回值为0
+
 		printf("********** 请输入密码：");
 		scanf("%s", Password);
 
-		if (strcmp(Account, "0") == 0 || strcmp(Password, "0") == 0)//判断是否返回
-		{
+		if (strcmp(Password, "0") == 0)//判断是否返回
 			return 0;//登录失败，返回值为0
-		}
 
 		//查询账号数量
 		int i = 0;
@@ -122,7 +127,12 @@ void User_menu(char User_Account[User_Num][2][User_Account_Length], int Num_User
 		switch (input)
 		{
 		case 1:
-
+			if (borrow[Num_User_Account].borrow_book[User_Borrow_MAX_Num - 1].time != 0)//检测未归还书籍是否已经到达上线
+			{
+				printf("很抱歉！！您借阅的书籍已达上限，请尝试还书后继续\a\n");
+				Sleep(1500);
+				break;
+			}
 			Book_Boorow(User_own_Account, Num_User_Account);
 			break;
 
@@ -191,7 +201,7 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 		if (strcmp(input, "CHECK") == 0)
 			Check_Books();
 
-		else
+		else//不进行查看书籍列表，进行借书
 		{
 			//统计书的数量
 			int books_count = 0;
@@ -303,8 +313,9 @@ void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Accoun
 						printf("*** 价格 : %f\n", books[find_flag].Price);
 						printf("**************************************\n");
 						printf("***       目前暂未存货，抱歉！     ***\a\n");
+						printf("**************************************\n");
 						Sleep(1500);
-						input1 = 1;
+						input1 = 0;
 					}
 				} while (input1);
 			}

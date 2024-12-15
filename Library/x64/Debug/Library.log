@@ -1,4 +1,6 @@
-﻿  User_system.c
+﻿  Administrator_system.c
+  Library_system.c
+  User_system.c
   main.c
   正在生成代码...
   Library.vcxproj -> E:\VisualStudio2022Project\Class\After-Class\Library\x64\Debug\Library.exe

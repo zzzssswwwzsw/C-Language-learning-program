@@ -7,7 +7,7 @@
 int User_or_Administrator()
 {
 	int input = 0;
-	do
+	while (1)
 	{
 		system("cls");
 		printf("**************************************\n");
@@ -19,6 +19,7 @@ int User_or_Administrator()
 		printf("**************************************\n");
 		printf("请输入：");
 		scanf("%d", &input);
+
 		switch (input)
 		{
 		case 1:
@@ -30,13 +31,13 @@ int User_or_Administrator()
 
 		default:
 
-			input = 0;//令input=0重复循环
 			printf("输入错误！！请重输\a\n");
 			Sleep(1500);
 			break;
 
 		}
-	} while (!input);//当input=0时重复循环重新输入
+	}
+	return 0;
 }
 
 

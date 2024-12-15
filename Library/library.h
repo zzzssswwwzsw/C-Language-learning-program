@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-#include <time.h>
+#include <time.h> 
 
 
 
@@ -153,6 +153,21 @@ void Administrator_menu();
 
 //查询书籍信息菜单
 void Check_Books_menu();
+
+//定向查找书籍信息
+void Targeted_Lookups(int input);
+
+//修改书籍目录
+void Change_Books_menu();
+
+//新增书籍
+void New_Books();
+
+//删除书籍
+void Delete_Books();
+
+//修改书籍
+void Change_Books();
 
 
 /*************************************************************/
