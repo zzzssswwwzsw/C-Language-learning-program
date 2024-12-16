@@ -544,45 +544,110 @@ void Change_Books()
 			printf("**************************************\n");
 			printf("*******  请问要修改以下哪些信息  *****\n");
 			printf("**************************************\n");
-			printf("** 1. 书名：    %s\n", books[i].Name);
-			printf("** 2. 作者：    %s\n", books[i].author);
-			printf("** 3. 分类号：  %s\n", books[i].Classification);
-			printf("** 4. 出版单位：%s\n", books[i].Publisher);
-			printf("** 5. 出版时间：%d\n", books[i].Year);
-			printf("** 6. 库存数量：%d\n", books[i].Inventory_quantity);
-			printf("** 7. 价格：    %f\n", books[i].Price);
+			printf("** 1. 书名：    %s\n", books[find_flag].Name);
+			printf("** 2. 作者：    %s\n", books[find_flag].author);
+			printf("** 3. 分类号：  %s\n", books[find_flag].Classification);
+			printf("** 4. 出版单位：%s\n", books[find_flag].Publisher);
+			printf("** 5. 出版时间：%d\n", books[find_flag].Year);
+			printf("** 6. 库存数量：%d\n", books[find_flag].Inventory_quantity);
+			printf("** 7. 价格：    %f\n", books[find_flag].Price);
 			printf("** 0. 返回");
 			printf("**************************************\n");
 			printf("请输入：");
 			scanf("%d", &input1);
 
-			if (input1 == 0)//判断是否返回
+			char* changed_str;
+			char change_str[Book_Name_Length] = { 0 };
+			float* changed_num;
+			float change_num = 0;
+
+			switch (input1)
+			{
+			case -1://判断是否返回
+
 				break;
 
-			else if (input1 >= 1 && input1 <= 7)
+			case 1:
 			{
-				switch (input1)
-				{
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					break;
-				case 5:
-					break;
-				case 6:
-					break;
-				case 7:
-					break;
-				}
+				char* changed_str = &books[find_flag].Name;
+				break;
 			}
-			else
+			case 2:
 			{
+				char* changed_str = &books[find_flag].author;
+				break;
+			}
+			case 3:
+			{
+				char* changed_str = &books[find_flag].Classification;
+				break;
+			}
+			case 4:
+			{
+				char* changed_str = &books[find_flag].Publisher;
+				break;
+			}
+			case 5:
+			{
+				float *changed_num = &books[find_flag].Year;
+				break;
+			}
+			case 6:
+			{
+				float* changed_num = &books[find_flag].Inventory_quantity;
+				break;
+			}
+			case 7:
+			{
+				float* changed_num = &books[find_flag].Price;
+				break;
+			}
+			default:
+				
 				printf("输入错误！！请重输\a\n");
 				Sleep(1500);
+				break;
+
+			}
+
+			if (input1 >= 1 && input1 <= 4)//修改字符串
+			{
+				system("cls");
+				printf("***************************************\n");
+				printf("*******        输入-1返回         *****\n");
+				printf("***************************************\n");
+				printf("*******       修改以下信息       ******\n");
+				printf("***************************************\n");
+				printf("***修改值：%s", *changed_str);
+				printf("***************************************\n");
+				printf("***修改为：");
+				scanf("%s", change_str);
+			}
+			else if (input1 >= 5 && input1 <= 6)//修改整形
+			{
+				system("cls");
+				printf("***************************************\n");
+				printf("*******        输入-1返回         *****\n");
+				printf("***************************************\n");
+				printf("*******       修改以下信息       ******\n");
+				printf("***************************************\n");
+				printf("***修改值：%d", (int)changed_num);
+				printf("***************************************\n");
+				printf("***修改为：");
+				scanf("%d", change_num);
+			}
+			else if (input1 = 7)//修改浮点型
+			{
+				system("cls");
+				printf("***************************************\n");
+				printf("*******        输入-1返回         *****\n");
+				printf("***************************************\n");
+				printf("*******       修改以下信息       ******\n");
+				printf("***************************************\n");
+				printf("***修改值：%f", changed_num);
+				printf("***************************************\n");
+				printf("***修改为：");
+				scanf("%f", change_num);
 			}
 		}
 	}

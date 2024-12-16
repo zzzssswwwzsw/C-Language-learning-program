@@ -409,6 +409,13 @@ void Book_Return(char User_own_Account[User_Account_Length], int Num_User_Accoun
 						k++;
 				}
 
+				//找到该书籍在书籍结构体中的下标
+				int j = 0;
+				while (strcmp(books[j].Name, input) != 0)
+					j++;
+				//书籍数量加一
+				books[j].Inventory_quantity++;
+
 				printf("还书成功！！\n");
 				Sleep(1500);
 			}
