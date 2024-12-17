@@ -96,6 +96,16 @@ extern struct Borrow borrow[User_Num];
 
 
 
+//声明外部管理员的账户以及密码
+extern char Administrator_Account[2][20];
+
+
+
+//声明外部用户的账户以及密码
+extern char User_Account[User_Num][2][User_Account_Length];
+
+
+
 
 
 /*************************************************************/
@@ -108,13 +118,13 @@ extern struct Borrow borrow[User_Num];
 int User_or_Administrator();
 
 //用户选择界面
-int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_User_Account);
+int User_choose(int* Num_User_Account);
 
 //用户登录界面
-int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_User_Account);
+int User_login(int* Num_User_Account);
 
 //用户菜单
-void User_menu(char User_Account[User_Num][2][User_Account_Length], int Num_User_Account);
+void User_menu(int Num_User_Account);
 
 //用户借书系统
 void Book_Boorow(char User_own_Account[User_Account_Length], int Num_User_Account);
@@ -141,12 +151,12 @@ void Check_Books();
 int Is_Timeout(char book_name[Book_Name_Length], int Num_User_Account);
 
 //修改用户密码
-void Change_Password(char User_Account[User_Num][2][User_Account_Length], int Num_User_Account);
+void Change_Password(int Num_User_Account);
 
 
 
 //管理员登录
-int Administrator_login(char Administrator_Account[2][20]);
+int Administrator_login();
 
 //管理员菜单
 void Administrator_menu();
@@ -168,6 +178,30 @@ void Delete_Books();
 
 //修改书籍
 void Change_Books();
+
+//新增用户
+void New_User();
+
+//删除用户
+void Delete_User();
+
+//查看用户信息
+void Check_User_information();
+
+//查看总用户信息
+void Check_All_User_information();
+
+//查询个人借还书信息
+void Check_User_Borrow_Return();
+
+//管理员修改用户密码
+void Change_User_Password();
+
+//查询总借阅信息
+void Check_All_Borrow();
+
+//查询总归还信息
+void Check_All_Return();
 
 
 /*************************************************************/

@@ -141,7 +141,7 @@ void Borrow_information(char Account[User_Account_Length], int Num_User_Account)
 		system("cls");
 		printf("********************************************\n");
 		printf("**********   用户名：%s\n", Account);
-		printf("**********   借书记录： ********************\n");
+		printf("**********   未归还书籍： ******************\n");
 		printf("********************************************\n");
 		int j = 0;
 		while (borrow[Num_User_Account].borrow_book[j].time != 0)
@@ -264,13 +264,14 @@ int Is_Timeout(char book_name[Book_Name_Length], int Num_User_Account)
 
 
 
-void Change_Password(char User_Account[User_Num][2][User_Account_Length], int Num_User_Account)
+void Change_Password(int Num_User_Account)
 {
 	char Original_password[User_Account_Length] = { 0 };
 	char New_password[User_Account_Length] = { 0 };
 	do
 	{
 		system("cls");
+		printf("*用户：%s\n", User_Account[Num_User_Account][0]);
 		printf("**************************************\n");
 		printf("**********     输入0返回    **********\n");
 		printf("**************************************\n");
@@ -284,7 +285,10 @@ void Change_Password(char User_Account[User_Num][2][User_Account_Length], int Nu
 
 		//判断与原密码是否相同
 		if (strcmp(Original_password, User_Account[Num_User_Account][1]) != 0)//不相同
+		{
 			printf("输入错误！！请重新输入\a\n");
+			Sleep(1500);
+		}
 		else//相同，进行密码修改
 		{
 			printf("**********   请输入新密码： **********\n");
@@ -295,12 +299,29 @@ void Change_Password(char User_Account[User_Num][2][User_Account_Length], int Nu
 			if (strcmp(New_password, "0") == 0)
 				break;
 
-			//修改密码
-			strcpy(User_Account[Num_User_Account][1], New_password);
+			char Password1[User_Account_Length] = { 0 };
+			printf("**********  请再输一次密码：**********\n");
+			printf("请输入：");
+			scanf("%s", Password1);
 
-			printf("密码修改成功！\n");
-			Sleep(1500);
-			strcpy(New_password, "0");//退出标志
+			if (strcmp(Password1, "0") == 0)//判断是否退出
+				break;
+
+			//比较两次输入的密码是否相同
+			if (strcmp(New_password, Password1) != 0)//不相同
+			{
+				printf("两次密码不相同！！请重输\a\n");
+				Sleep(1500);
+			}
+			else
+			{
+				//修改密码
+				strcpy(User_Account[Num_User_Account][1], New_password);
+
+				printf("密码修改成功！\n");
+				Sleep(1500);
+				strcpy(New_password, "0");//退出标志
+			}
 		}
 	} while (strcmp(Original_password, "0") != 0 && strcmp(New_password, "0") != 0);
 }

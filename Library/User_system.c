@@ -4,7 +4,7 @@
 
 
 
-int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_User_Account)
+int User_choose(int* Num_User_Account)
 {
 	int input = 0;
 	do
@@ -30,7 +30,7 @@ int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_Us
 		case 1:
 
 			//判断是否登录成功
-			if (User_login(User_Account, Num_User_Account))//登录成功
+			if (User_login(Num_User_Account))//登录成功
 				return 1;//登录成功，返回值为1
 			break;
 
@@ -49,7 +49,7 @@ int User_choose(char User_Account[User_Num][2][User_Account_Length], int* Num_Us
 
 
 
-int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_User_Account)
+int User_login(int* Num_User_Account)
 {
 	char Account[User_Account_Length] = { 0 };
 	char Password[User_Account_Length] = { 0 };
@@ -104,7 +104,7 @@ int User_login(char User_Account[User_Num][2][User_Account_Length], int* Num_Use
 
 
 
-void User_menu(char User_Account[User_Num][2][User_Account_Length], int Num_User_Account)
+void User_menu(int Num_User_Account)
 {
 	char User_own_Account[User_Account_Length] = { 0 };
 	strcpy(User_own_Account, User_Account[Num_User_Account][0]);
@@ -153,7 +153,7 @@ void User_menu(char User_Account[User_Num][2][User_Account_Length], int Num_User
 
 		case 5:
 
-			Change_Password(User_Account, Num_User_Account);
+			Change_Password(Num_User_Account);
 			break;
 
 		case 0://退出登录

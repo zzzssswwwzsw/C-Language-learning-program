@@ -54,6 +54,22 @@ struct Borrow borrow[User_Num] =
 
 
 
+//管理员的账户以及密码
+char Administrator_Account[2][20] = { "123", "123abc" };
+
+
+
+//用户的账户以及密码
+char User_Account[User_Num][2][User_Account_Length] =
+{
+{"000001", "123456"},
+{"000002", "123456"},
+{"000003", "123456"},
+{"000004", "123456"},
+{"000005", "123456"},
+{"000006", "123456"},
+};
+
 
 
 
@@ -62,22 +78,6 @@ struct Borrow borrow[User_Num] =
 
 int main()
 {
-	//管理员的账户以及密码
-	char Administrator_Account[2][20] = { "123", "123abc" };
-
-
-
-	//用户的账户以及密码
-	char User_Account[User_Num][2][User_Account_Length] =
-	{
-	{"000001", "123456"},
-	{"000002", "123456"},
-	{"000003", "123456"},
-	{"000004", "123456"},
-	{"000005", "123456"},
-	{"000006", "123456"},
-	};
-
 	//用户的账户下标数
 	int Num_User_Account = -1;
 
@@ -95,16 +95,16 @@ int main()
 		case 1:
 
 			//查询用户是否选择成功
-			if (User_choose(User_Account, &Num_User_Account))
+			if (User_choose(&Num_User_Account))
 			{
-				User_menu(User_Account, Num_User_Account);
+				User_menu(Num_User_Account);
 			}
 			break;
 
 		case 2:
 
 			//查询管理员是否登录成功
-			if (Administrator_login(Administrator_Account))
+			if (Administrator_login())
 			{
 				Administrator_menu();
 			}
